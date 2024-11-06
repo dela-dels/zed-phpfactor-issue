@@ -10,19 +10,21 @@ class ServiceProviderController extends Controller
 {
     public function index(): JsonResource
     {
+        //phpfactor fails to load this class
         return ServiceProviderResource::make();
     }
-    public function store(Request $request)
+    public function store(Request $request): JsonResource
     {
-        //$sp = ServiceProvider::q
+        // this shouldn't be done but for testing purposes
+        // we will pass in the whole request object
+        $sp = ServiceProvider::query()->create($request->all());
+
+        return ServiceProviderResource::make($sp);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(ServiceProvider $serviceProvider)
     {
-        //
+        return ServiceProviderResource::make($serviceProvider);
     }
 
     /**
